@@ -3,78 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>meaw</title>
-
-        <script language ="JavaScript">
-        function Signupcheck()
-            {
-                fname = document.signup.txt_fname.value;
-                if(fname.length == "")
-                {
-                    alert("กรุณากรอกชื่อ");
-                    return false;
-                }
-                lname = document.signup.txt_lname.value;
-                if(lname.length == "")
-                {
-                    alert("กรุณากรอกนามสกุล");
-                    return false;
-                }
-                Email = document.signup.txt_email.value;
-                if(Email.length == "")
-                {
-                    alert("กรุณากรอกอีเมลล์");
-                    return false;
-                }
-                var user = "meawnoi";
-                username = document.signup.txt_user.value;
-                if(username.length == "")
-                {
-                    alert("กรุณาใส่ชื่อผู้ใช้");
-                    return false;
-                }
-                if(username.length == user.length)
-                {
-                    alert("Username นี้มีอยู่แล้ว");
-                    return false;
-                }
-                password = document.signup.txt_pwd.value;
-                if(password.length < 8)
-                {
-                    alert("ป้อนรหัสผ่านอย่างน้อย 8 ตัว");
-                    return false;
-                }
-            }
-    </script>
-
 </head>
-<body>
+<body bgcolor="skyblue">
  <center>
     <table  border="0" width="400px" >
-        <form name="signup" method="post" action="/" onsubmit="return Signupcheck()">
-
+        <form name="signup" form method="post" action="{{ url_for('regis') }}">
                 <tr>
                     <td colspan="2" align="center"> <h1>Sign Up</h1> </td>
                 </tr>
+            {{ form.csrf_token }}
                 <tr>
                     <td> <h4>Name     : </h4> </td>
-                    <td> <input type="text" name="txt_fname" size="40" placeholder="Your FirstName"> </td>
+                    <td> {{ form.Firstname }} </td>
                 </tr>
                 <tr>
                     <td> <h4>Lastname  : </h4> </td>
-                    <td> <input type="text" name="txt_lname" size="40" placeholder="Your LastName"> </td>
+                    <td> {{ form.Lastname }} </td>
                 </tr>
                 <tr>
                     <td> <h4>Email    : </h4> </td>
-                    <td> <input type="email" name="txt_email" size="40" placeholder="Your E-mail"> </td>
+                    <td> {{ form.Email }} </td>
                 </tr>
+            {% for error in form.Email.errors %}
+                <tr>
+                    <td colspan="2" align="center">
+                        <li style="color:red">{{ error }}</li>
+                    </td>
+                </tr>
+            {% endfor %}
                 <tr>
                     <td> <h4>Username : </h4> </td>
-                    <td> <input type="text" name="txt_user" size="40" placeholder="Your Username"> </td>
+                    <td> {{ form.Username }} </td>
                 </tr>
                 <tr>
                     <td> <h4>Password : </h4> </td>
-                    <td> <input type="password" name="txt_pwd" size="40" placeholder="Password"> </td>
+                    <td> {{ form.Password }} </td>
                 </tr>
+            {% for error in form.Password.errors %}
+                <tr>
+                    <td colspan="2" align="center">
+                        <li style="color:red">{{ error }}</li>
+                    </td>
+                </tr>
+            {% endfor %}
                 <tr> <td colspan="2" align="center"> <input type="submit" name="submit" size="40" value="Sign Up"> </td> </tr>
 
         </form>
